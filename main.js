@@ -1,5 +1,5 @@
 $(updateView)
 
 function updateView() {
-    alert("It's ALIVE!")
+    alert("It's Alive!!")
 }
