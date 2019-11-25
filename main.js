@@ -39,7 +39,7 @@ function perYear(data) {
         months2018.push(data[2018] [index] [month])
     }
     console.log("2018 data by month is easy " + months2018)
-}
+} 
 // add(2,3);
 
 // function add (num1, num2){
