@@ -2,44 +2,99 @@ const BASE_URL = "https://zagster-service.herokuapp.com"
 
 $(updateView)
 
+var Bacon=[]
+
 function updateView() {
-    $.getJSON(BASE_URL + "/rides/count", updateRideCount)
+    // $.getJSON(BASE_URL + "/rides/count/per_hour", updatechart)
+    $.when ($.getJSON(BASE_URL + "/rides/count/per_hour", test)
+    ).then (updatechart)
 }
 
-function updateRideCount(data) {
-    numberOfRides=data.count
-    $("h2#rideCount").html(numberOfRides)
+// function updateRideCount(data) {
+//     numberOfRides=data.count
+//     $("h2#rideCount").html(numberOfRides)
+// }
+
+// function updateView2() {
+//     $.getJSON(BASE_URL + "/rides/count" , updateRideCount)
+
+//     $.when ($.getJSON(BASE_URL + "/rides/count/per_month", perYear),
+//     ).then(updateChart)
+// }
+
+function test(data){
+    var test2017=data[2017]
+    console.log(Bacon)
+    Bacon.push(data["0"])
+    Bacon.push(data["1"])
+    Bacon.push(data["3"])
+    Bacon.push(data["4"])
+    Bacon.push(data["5"])
+    Bacon.push(0)
+    Bacon.push(data["7"])
+    Bacon.push(data["8"])
+    Bacon.push(data["9"])
+    Bacon.push(data["10"])
+    Bacon.push(data["11"])
+    Bacon.push(data["12"])
+    Bacon.push(data["13"])
+
+    console.log(Bacon)
 }
-$(updateView2)
 
-let years=[]
-let months2016=[]
-let months2017=[]
-let months2018=[]
-
-function updateView2() {
-    $.getJSON(BASE_URL + "/rides/count" , updateRideCount)
-
-    $.when ($.getJSON(BASE_URL + "/rides/count/per_month", perYear),
-    ).then(updateChart)
+function updatechart () {
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+        labels: ['0 hour', '1st hour', '2nd hour', '3rd hour', '4th hour', '5th hour', '6th hour', '7th hour', '8th hour', '9th hour', '10th hour', '11th hour', '12th hour'],
+        datasets: [{
+            label: 'Rides within the Hour',
+            data: Bacon,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 }
-
-function perYear(data) {
-    for (var index=0, month=9; index<=3, month<=12; ++index, ++month){
-        months2016.push(data[2016] [index] [month])
-    }
-    console.log("2016 data by month is easy " + months2016)
-
-    for (var index=0, month=9; index<=3, month<=12; ++index, ++month){
-        months2017.push(data[2017] [index] [month])
-    }
-    console.log("2017 data by month is easy " + months2017)
-
-    for (var index=0, month=9; index<=3, month<=12; ++index, ++month){
-        months2018.push(data[2018] [index] [month])
-    }
-    console.log("2018 data by month is easy " + months2018)
-} 
 // add(2,3);
 
 // function add (num1, num2){
